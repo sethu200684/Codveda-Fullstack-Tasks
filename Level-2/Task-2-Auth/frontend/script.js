@@ -11,27 +11,33 @@ function toggleForm(){
 async function handleAuth(){
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const endpoint = isLoginMode ? '/login' : '/register';
-
-    const response = await fetch(API_URL + endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    });
-
-    const data = await response.json();
     const msgDiv = document.getElementById('message');
 
-    if (response.ok) {
-        msgDiv.style.color = "green";
-        msgDiv.innerText = data.message;
-        if (data.token) {
-            // Save the token so the browser "remembers" you
-            localStorage.setItem('authToken', data.token);
-            alert("Login Successful! Token saved.");
+    msgDiv.innerText = ""; 
+
+    try {
+        const endpoint = isLoginMode ? '/login' : '/register';
+        const response = await fetch(API_URL + endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            msgDiv.style.color = "green";
+            msgDiv.innerText = data.message;
+            if (data.token) {
+                localStorage.setItem('authToken', data.token);
+                alert("Welcome! Redirecting...");
+            }
+        } else {
+            // This will display your new "Username too short" or "Password weak" errors
+            msgDiv.style.color = "red";
+            msgDiv.innerText = data.error; 
         }
-    } else {
-        msgDiv.style.color = "red";
-        msgDiv.innerText = data.error;
+    } catch (error) {
+        msgDiv.innerText = "Connection failed. Is the server running?";
     }
 }
