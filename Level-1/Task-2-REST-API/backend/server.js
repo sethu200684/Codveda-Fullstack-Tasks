@@ -4,10 +4,10 @@ const app = express();
 const PORT = 3000;
 
 // Middleware
-app.use(cors()); // Allows your frontend to connect
-app.use(express.json()); // Allows the server to read JSON from requests[cite: 1]
+app.use(cors()); // Allows frontend to connect
+app.use(express.json()); // Allows the server to read JSON from requests
 
-// In-memory data (used instead of a database for Level 1)[cite: 1]
+// In-memory data (used instead of a database for Level 1)
 let users = [
     { id: 1, name: "John Doe", role: "Developer" },
     { id: 2, name: "Jane Smith", role: "Designer" }
@@ -15,7 +15,7 @@ let users = [
 
 // --- API ROUTES ---
 
-// 1. READ: Get all users[cite: 1]
+// 1. READ: Get all users
 app.get('/api/users', (req, res) => {
     res.status(200).json(users);
 });
@@ -31,7 +31,7 @@ app.post('/api/users', (req, res) => {
     res.status(201).json(newUser);
 });
 
-// 3. UPDATE: Update a user's details[cite: 1]
+// 3. UPDATE: Update a user's details
 app.put('/api/users/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const index = users.findIndex(u => u.id === id);
@@ -45,14 +45,14 @@ app.put('/api/users/:id', (req, res) => {
     }
 });
 
-// 4. DELETE: Remove a user[cite: 1]
+// 4. DELETE: Remove a user
 app.delete('/api/users/:id', (req, res) => {
     const id = parseInt(req.params.id);
     users = users.filter(u => u.id !== id);
     res.status(200).json({ message: `User with ID ${id} deleted` });
 });
 
-// Start the server[cite: 1]
+// Start the server
 app.listen(PORT, () => {
     console.log(`✅ Server is running at http://localhost:${PORT}`);
     console.log(`🚀 Test it here: http://localhost:${PORT}/api/users`);
