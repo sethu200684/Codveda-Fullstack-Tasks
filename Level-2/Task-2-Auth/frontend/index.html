@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Level 2 - Secure Auth</title>
+        <link rel="stylesheet" href="style.css"> 
+    </head>
+    <body>
+        <div class="auth-container">
+            <h2 id="formTitle">Create Account</h2>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username">
+                <input type="password" id="password" placeholder="Password">
+            </div>
+            <button onclick="handleAuth()" id="submitBtn">Register</button>
+            <p onclick="toggleForm()" id="toggleText">Already have an account? Login</p>
+            <div id="message"></div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
