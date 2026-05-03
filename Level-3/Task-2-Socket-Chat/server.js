@@ -6,9 +6,11 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
+app.use(express.static(__dirname));
+
 // Health check for Railway
 app.get('/', (req, res) => {
-    res.send('Task 2: Real-Time WebSocket Server is live!');
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const server = http.createServer(app);
