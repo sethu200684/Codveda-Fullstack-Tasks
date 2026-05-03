@@ -4,6 +4,29 @@ This repository contains the completed tasks for the Codveda Internship, ranging
 
 ---
 
+## Technical Details
+
+### Key API Endpoints (Level 1 & 2)
+* `POST /api/auth/signup` - Register a new user with hashed passwords.
+* `POST /api/auth/login` - Authenticate user and return JWT.
+* `GET /api/tasks` - Fetch all tasks (Protected Route).
+
+### WebSocket Events (Level 3)
+* `send_message`: Client sends a message object to the server.
+* `receive_message`: Server broadcasts message to all connected clients.
+* `join_room`: Client joins the `internship-updates` channel for targeted notifications.
+
+## Environment Variables
+To run this project locally, create a `.env` file in the root directory and add the following:
+PORT=8080
+DB_HOST=your-aiven-db-host
+DB_USER=your-db-username
+DB_PASSWORD=your-db-password
+DB_NAME=your-db-name
+JWT_SECRET=your-secure-random-string
+
+---
+
 ## Level 1: Web Foundations
 ### Task 2: Build a Simple REST API
 **Status: Completed**
