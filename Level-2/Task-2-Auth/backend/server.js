@@ -89,4 +89,4 @@ app.post('/api/login', async (req, res) => {
 });
 
 const PORT = 3000;
-app.listen(PORT, () => console.log(`🔐 Auth Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Auth Server running on http://localhost:${PORT}`));

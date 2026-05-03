@@ -33,7 +33,6 @@ async function handleAuth(){
                 alert("Welcome! Redirecting...");
             }
         } else {
-            // This will display your new "Username too short" or "Password weak" errors
             msgDiv.style.color = "red";
             msgDiv.innerText = data.error; 
         }

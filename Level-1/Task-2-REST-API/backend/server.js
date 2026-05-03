@@ -4,8 +4,8 @@ const app = express();
 const PORT = 3000;
 
 // Middleware
-app.use(cors()); // Allows frontend to connect
-app.use(express.json()); // Allows the server to read JSON from requests
+app.use(cors()); 
+app.use(express.json()); 
 
 // In-memory data (used instead of a database for Level 1)
 let users = [
@@ -54,6 +54,6 @@ app.delete('/api/users/:id', (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`✅ Server is running at http://localhost:${PORT}`);
-    console.log(`🚀 Test it here: http://localhost:${PORT}/api/users`);
+    console.log(`Server is running at http://localhost:${PORT}`);
+    console.log(`Test it here: http://localhost:${PORT}/api/users`);
 });

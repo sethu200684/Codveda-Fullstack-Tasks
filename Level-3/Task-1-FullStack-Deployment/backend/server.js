@@ -12,9 +12,9 @@ app.use(cors());
 // Use the environment variable on Render, but never use the fallback in production
 const SECRET_KEY = process.env.JWT_SECRET || "development_only_secret";
 
-// Root Route (Important for Render Health Checks)
+// Root Route 
 app.get('/', (req, res) => {
-    res.send('🚀 Level 3 Task Manager API is live!');
+    res.send('Level 3 Task Manager API is live!');
 });
 
 /// --- MIDDLEWARE: PROTECT PRIVATE ROUTES ---
