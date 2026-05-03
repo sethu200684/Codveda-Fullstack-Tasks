@@ -7,10 +7,11 @@ const path = require('path');
 const app = express();
 app.use(cors());
 
+// This allows the server to serve chat.html and any other local files
 app.use(express.static(__dirname));
 
-// Health check for Railway
-app.get('/chat', (req, res) => {
+// Fixed: Changed route to '/' so it works at the main URL
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'chat.html'));
 });
 
@@ -26,16 +27,13 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
     console.log(`User connected: ${socket.id}`);
 
-    // Handle joining a specific room 
     socket.on('join_room', (roomName) => {
         socket.join(roomName);
         console.log(`User ${socket.id} joined room: ${roomName}`);
     });
 
-    // Handle bidirectional communication 
     socket.on('send_message', (data) => {
-        console.log("Message received:", data);
-        // Send to everyone in the room or everyone connected
+        // io.emit sends to EVERYONE connected
         io.emit('receive_message', data); 
     });
 
@@ -43,10 +41,10 @@ io.on('connection', (socket) => {
         console.log('User disconnected');
     });
 
-    //Sends a notification to everyone in the room 5 seconds after they connect
+    // Welcome notification
     setTimeout(() => {
-    io.to('internship-updates').emit('notification', { message: 'Welcome to Level 3 Task 2!' });
-    }, 5000);
+        socket.emit('notification', { message: 'Welcome to Level 3 Task 2!' });
+    }, 2000);
 });
 
 const PORT = process.env.PORT || 8080;

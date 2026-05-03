@@ -9,8 +9,9 @@
         #chat-container { width: 400px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         h2 { text-align: center; color: #5F83C4; }
         #messages { height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background: #fafafa; }
-        .message { margin-bottom: 8px; padding: 5px 10px; border-radius: 5px; background: #e1ffc7; width: fit-content; max-width: 80%; }
-        input { width: 75%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .message { margin-bottom: 8px; padding: 8px 12px; border-radius: 15px; background: #5F83C4; color: white; width: fit-content; max-width: 80%; }
+        .input-area { display: flex; gap: 5px; }
+        input { flex-grow: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
         button { padding: 10px; background: #5F83C4; color: white; border: none; border-radius: 5px; cursor: pointer; }
         button:hover { background: #4a6da8; }
     </style>
@@ -20,31 +21,25 @@
 <div id="chat-container">
     <h2>Real-Time Chat</h2>
     <div id="messages"></div>
-    <input type="text" id="messageInput" placeholder="Type a message...">
-    <button onclick="sendMessage()">Send</button>
+    <div class="input-area">
+        <input type="text" id="messageInput" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
 </div>
 
-<!-- Load Socket.io Client -->
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script>
-    // 1. Dynamic Connection Logic
-    // Automatically switches between local testing and your live Railway deployment
-    const socket = io(window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost" 
-        ? "http://localhost:8080" 
-        : "https://codveda-fullstack-tasks-production.up.railway.app"); 
+    // This connects automatically to the current host (localhost or Railway)
+    const socket = io(); 
 
     const messagesDiv = document.getElementById('messages');
     const input = document.getElementById('messageInput');
 
-    // 2. Connection Success Listener
     socket.on('connect', () => {
-        console.log("Connected to WebSocket Server!");
-        console.log("Your ID:", socket.id);
-        // Automatically join the room once connected 
+        console.log("Connected! ID:", socket.id);
         socket.emit('join_room', 'internship-updates');
     });
 
-    // 3. Receive Messages (Bidirectional Communication)
     socket.on('receive_message', (data) => {
         const msgElement = document.createElement('div');
         msgElement.classList.add('message');
@@ -53,23 +48,21 @@
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     });
 
-    // 4. Send Message Function
     function sendMessage() {
         const text = input.value;
-        if (text) {
+        if (text.trim() !== "") {
             socket.emit('send_message', { text: text });
             input.value = '';
         }
     }
 
-    // 5. Notifications Listener (User-specific updates)
-    socket.on('notification', (data) => {
-        alert("New Notification: " + data.message);
+    // Allow pressing "Enter" to send
+    input.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") sendMessage();
     });
 
-    // 6. Error Handling
-    socket.on('connect_error', (err) => {
-        console.log("Connection Error:", err.message);
+    socket.on('notification', (data) => {
+        console.log("Notification:", data.message);
     });
 </script>
 </body>
