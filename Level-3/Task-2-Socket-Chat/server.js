@@ -10,8 +10,8 @@ app.use(cors());
 app.use(express.static(__dirname));
 
 // Health check for Railway
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+app.get('/chat', (req, res) => {
+    res.sendFile(path.join(__dirname, 'chat.html'));
 });
 
 const server = http.createServer(app);
