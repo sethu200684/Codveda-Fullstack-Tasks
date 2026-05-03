@@ -91,3 +91,27 @@ A bidirectional communication system enabling instant data updates without page 
 
 ---
 
+## Deployment & Task Switching (Railway)
+
+This repository is organized into a multi-tier architecture. Since each task operates as a standalone Application Tier, you must update the **Root Directory** in Railway to switch between demos.
+
+### Current Deployment Status
+* **Task 1:** Full-Stack Authentication with Aiven MySQL.
+* **Task 2:** Real-Time Bidirectional Chat using Socket.io.
+
+### How to Switch the Live Demo
+To change which task is currently live on your Railway URL:
+
+1. Log in to your **Railway Dashboard**.
+2. Select your project and go to the **Settings** tab.
+3. Scroll down to the **Build** section and locate the **Root Directory** field.
+4. Enter the path for the desired task:
+
+| Task | Description | Root Directory Path |
+| :--- | :--- | :--- |
+| **Task 1** | Auth & Database Tier | `/Level-3/Task-1-FullStack-Deployment/backend` |
+| **Task 2** | Socket.io Chat Tier | `/Level-3/Task-2-Socket-Chat` |
+
+5. Click **Save**. Railway will automatically trigger a new deployment for that specific folder.
+
+> **Note:** Ensure your Environment Variables (Database SSL, Port, etc.) are configured in the Railway 'Variables' tab to maintain connection to the Data Tier.
