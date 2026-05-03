@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const db = require('./db');
+const path = require('path');
 
 const app = express();
 app.use(express.json());
@@ -14,7 +15,7 @@ const SECRET_KEY = process.env.JWT_SECRET || "development_only_secret";
 
 // Root Route 
 app.get('/', (req, res) => {
-    res.send('Level 3 Task Manager API is live!');
+    res.sendFile(path.join(__dirname, 'chat.html'))
 });
 
 /// --- MIDDLEWARE: PROTECT PRIVATE ROUTES ---
